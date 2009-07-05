@@ -117,18 +117,14 @@ module Diatonic
     # Construct a PitchClass from an Integer (Z12)
     def self.from_integer(i)
       case i % 12
-        when 0 then c
-        when 1 then cs
-        when 2 then d
-        when 3 then ds
-        when 4 then e
-        when 5 then f
-        when 6 then fs
-        when 7 then g
-        when 8 then gs
-        when 9 then a
-        when 10 then as
-        when 11 then b
+        when 0  then PitchClass.new('c', 0)
+        when 2  then PitchClass.new('d', 2)
+        when 4  then PitchClass.new('e', 4)
+        when 5  then PitchClass.new('f', 5)
+        when 7  then PitchClass.new('g', 7)
+        when 9  then PitchClass.new('a', 9)
+        when 11 then PitchClass.new('b', 11)
+        else from_integer(i-1).sharp
       end
     end
     class << self; alias from_midi from_integer end
