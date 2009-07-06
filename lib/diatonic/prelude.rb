@@ -18,6 +18,10 @@ class Numeric
 end
 
 module Kernel
+  def ruby19?
+    @ruby19 ||= defined?(RUBY_VERSION) && RUBY_VERSION =~ /^1\.9/
+  end
+  
   # Convert midi note numbers to hertz.
   def mtof(pitch)
     440.0 * (2.0 ** ((pitch.to_f-69)/12))

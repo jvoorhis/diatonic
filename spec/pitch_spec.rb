@@ -126,13 +126,13 @@ describe PitchClass do
   end
   
   it "has a String representation" do
-    { c => 'c',
-      d => 'd',
-      e => 'e',
-      f => 'f',
-      g => 'g',
-      a => 'a',
-      b => 'b' }.each do |pc, s|
+    { c => 'C',
+      d => 'D',
+      e => 'E',
+      f => 'F',
+      g => 'G',
+      a => 'A',
+      b => 'B' }.each do |pc, s|
       pc.to_s.should == s
     end
   end
@@ -182,14 +182,26 @@ describe Sharp do
   end
   
   it "has a String representation" do
-    { cs => 'cs',
-      ds => 'ds',
-      es => 'es',
-      fs => 'fs',
-      gs => 'gs',
-      as => 'as',
-      bs => 'bs' }.each do |pc, s|
-      pc.to_s.should == s 
+    if ruby19?
+      { cs => "C\u{266F}",
+        ds => "D\u{266F}",
+        es => "E\u{266F}",
+        fs => "F\u{266F}",
+        gs => "G\u{266F}",
+        as => "A\u{266F}",
+        bs => "B\u{266F}" }.each do |pc, s|
+        pc.to_s.should == s
+      end
+    else
+      { cs => "C#",
+        ds => "D#",
+        es => "E#",
+        fs => "F#",
+        gs => "G#",
+        as => "A#",
+        bs => "B#" }.each do |pc, s|
+        pc.to_s.should == s
+      end
     end
   end
 end
@@ -238,14 +250,26 @@ describe Flat do
   end
   
   it "has a String representation" do
-    { cf => 'cf',
-      df => 'df',
-      ef => 'ef',
-      ff => 'ff',
-      gf => 'gf',
-      af => 'af',
-      bf => 'bf' }.each do |pc, s|
-      pc.to_s.should == s 
+    if ruby19?
+      { cf => "C\u{266D}",
+        df => "D\u{266D}",
+        ef => "E\u{266D}",
+        ff => "F\u{266D}",
+        gf => "G\u{266D}",
+        af => "A\u{266D}",
+        bf => "B\u{266D}" }.each do |pc, s|
+        pc.to_s.should == s
+      end
+    else
+      { cf => "Cf",
+        df => "Df",
+        ef => "Ef",
+        ff => "Ff",
+        gf => "Gf",
+        af => "Af",
+        bf => "Bf" }.each do |pc, s|
+        pc.to_s.should == s
+      end
     end
   end
 end

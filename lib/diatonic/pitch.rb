@@ -117,17 +117,24 @@ module Diatonic
     # Construct a PitchClass from an Integer (Z12)
     def self.from_integer(i)
       case i % 12
-        when 0  then PitchClass.new('c', 0)
-        when 2  then PitchClass.new('d', 2)
-        when 4  then PitchClass.new('e', 4)
-        when 5  then PitchClass.new('f', 5)
-        when 7  then PitchClass.new('g', 7)
-        when 9  then PitchClass.new('a', 9)
-        when 11 then PitchClass.new('b', 11)
+        when 0  then PitchClass.new('C', 0)
+        when 2  then PitchClass.new('D', 2)
+        when 4  then PitchClass.new('E', 4)
+        when 5  then PitchClass.new('F', 5)
+        when 7  then PitchClass.new('G', 7)
+        when 9  then PitchClass.new('A', 9)
+        when 11 then PitchClass.new('B', 11)
         else from_integer(i-1).sharp
       end
     end
     class << self; alias from_midi from_integer end
+    
+    PC_NAMES = [ 'C', nil, 'D', nil, 'E', 'F', nil, 'G', nil, 'A', nil, 'B' ]
+    
+    def self.from_string(s)
+      i = PC_NAMES.index(s.upcase)
+      from_integer(i)
+    end
     
     attr_reader :name, :rank
     alias natural_rank rank
@@ -250,7 +257,7 @@ module Diatonic
     end
     
     def to_s
-      "#{pc}s"
+      ruby19? ? "#{pc}\u{266F}" : "#{pc}#"
     end
   end
   
@@ -263,7 +270,9 @@ module Diatonic
     
     def acc_i; pc.acc_i - 1 end
     
-    def to_s; "#{pc}f" end
+    def to_s
+      ruby19? ? "#{pc}\u{266D}" : "#{pc}f"
+    end
   end
   
   # Optional module of Pitch and PitchClass constructors with a friendly syntax
@@ -273,25 +282,25 @@ module Diatonic
     ## Pitch Class constructors
     
     def cf; Flat.new(c) end
-    def c; PitchClass.new('c', 0) end
+    def c; PitchClass.new('C', 0) end
     def cs; Sharp.new(c) end
     def df; Flat.new(d) end
-    def d; PitchClass.new('d', 2) end
+    def d; PitchClass.new('D', 2) end
     def ds; Sharp.new(d) end
     def ef; Flat.new(e) end
-    def e; PitchClass.new('e', 4) end
+    def e; PitchClass.new('E', 4) end
     def es; Sharp.new(e) end
     def ff; Flat.new(f) end
-    def f; PitchClass.new('f', 5) end
+    def f; PitchClass.new('F', 5) end
     def fs; Sharp.new(f) end
     def gf; Flat.new(g) end
-    def g; PitchClass.new('g', 7) end
+    def g; PitchClass.new('G', 7) end
     def gs; Sharp.new(g) end
     def af; Flat.new(a) end
-    def a; PitchClass.new('a', 9) end
+    def a; PitchClass.new('A', 9) end
     def as; Sharp.new(a) end
     def bf; Flat.new(b) end
-    def b; PitchClass.new('b', 11) end
+    def b; PitchClass.new('B', 11) end
     def bs; Sharp.new(b) end
     
     ## Pitch Constructors
